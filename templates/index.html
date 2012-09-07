@@ -297,8 +297,8 @@
 						$('input').prop('disabled',true);
 					}
 					else if (data.already_inserted == 'false'){
-						$('#submit').attr('value','Thanks for registering!');
-						$('input').prop('disabled', true);
+						$('#submit').attr('value','Thanks for registering!').delay(3000).attr('value','Reloading the page');
+						location.reload()
 					}
 				});
 
