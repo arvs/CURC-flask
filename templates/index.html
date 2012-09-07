@@ -132,6 +132,10 @@
 					<div id="gsel-y" class="button2 btn">Yes</div>
 					<div id= "gsel-n" class="button2 btn">No</div>
 
+					<p>Can you drive a van (are over 21 and willing to take the Club Sports certification)?<p>
+                                        <div id="dsel-y" class="button2 btn">Yes</div>
+                                        <div id= "dsel-n" class="button2 btn">No</div>
+
 					<p>cuid number (on the back of your cuid, not your uni)</p>
 					<input type="text" name="cuid" class="text" />
 
@@ -168,7 +172,11 @@
 				</div>
 				<div class="four columns" id="mphc">
 					<p class="p-name">MPHC</p>
+					{% if mphc_available %}
 					<p class="p-price">$285 <span class="p-small">/ 9 mo</span></p>
+					{% else %}
+					<p class="p-price">$335 (Sold out of cheap ones) <span class="p-small">/ 9 mo</span></p>
+					{% endif %}
 					<ul>
 						<li>$285 for first 50, then $335</li>
 						<li>Closest Gym to Campus</li>
@@ -192,6 +200,8 @@
 		<div id="mselect" style="visibility:hidden">
 					<input type="radio" name = "gensel" value="m" checked>
 					<input type="radio" name = "gensel" value="f">
+					 <input type="radio" name = "dsel" value="y">
+                                        <input type="radio" name = "dsel" value="n" checked>
 					<input type="radio" name = "gsel" value="y">
 					<input type="radio" name = "gsel" value="n" checked>
 					<input type="radio" name = "ssel" value="s">
@@ -242,7 +252,7 @@
     </script>
 	<!-- select defaults -->
 	<script>
-		var defaultsarray = [$('#msel-default')[0], $('#ssel-m')[0], $('#gensel-m')[0], $('#gsel-n')[0]]
+		var defaultsarray = [$('#msel-default')[0], $('#dsel-n')[0], $('#ssel-m')[0], $('#gensel-m')[0], $('#gsel-n')[0]];
 		$(defaultsarray).addClass('button1');
 		$(defaultsarray).removeClass('button2');
 	</script>
