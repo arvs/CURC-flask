@@ -8,12 +8,15 @@ app.debug = True
 def index():
 	return render_template('index.html')
 
-@app.route('/search_for_prof')
-def search_for_prof():
+@app.route('/registration.json')
+def register():
 	db = DBConnection()
-	name = request.args.get("name","")
-	db.insert('classes', Instructor = name, link=x)
-	return jsonify(name=name, classes=[])
+	params = request.args
+	if len(db.get('members', fname=params['fname'], lname=params['lname'])) == 0:
+		db.insert('members', **params)
+		return jsonify(already_inserted='false')
+	else:
+		return jsonify(already_inserted='true')
 
 if __name__ == '__main__':
 	app.run()

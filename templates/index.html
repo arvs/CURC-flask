@@ -69,7 +69,7 @@
 			<li><a href="#contact">Register</a></li>
 		</ul>
 	</nav>
-	<form method="GET" action="#">
+	<form id="registration" method="GET" action="javascript: console.log('register called');">
 	<div id="contact">
 		<div class="container">
 			<div class="sixteen columns">
@@ -86,7 +86,7 @@
 					<input type="text" name="fname" class="text" />
 					
 					<p>Middle Name</p>
-					<input type="text" name="name" class="text" />
+					<input type="text" name="mname" class="text" />
 					
 					<p>Last Name</p>
 					<input type="text" name="lname" class="text" />
@@ -95,14 +95,14 @@
 					<input type="text" name="email" class="text"/>
 
 					<p>gender</p>
-					<div id="gensel:m" class="button2 btn">Male</div>
-					<div id="gensel:m" class="button2 btn">Female</div>
+					<div id="gensel-m" class="button2 btn">Male</div>
+					<div id="gensel-m" class="button2 btn">Female</div>
 					
 					<p>t-shirt size</p>
-					<div id="ssel:s" class="button2 btn">Small</div>
-					<div id="ssel:m" class="button2 btn">Medium</div>
-					<div id="ssel:l" class="button2 btn">Large</div>
-					<div id="ssel:xl" class="button2 btn">X-Large</div>
+					<div id="ssel-s" class="button2 btn">Small</div>
+					<div id="ssel-m" class="button2 btn">Medium</div>
+					<div id="ssel-l" class="button2 btn">Large</div>
+					<div id="ssel-xl" class="button2 btn">X-Large</div>
 
 					<p>school</p>
 					<select name="school" style="color:black">
@@ -129,8 +129,8 @@
 					</select>
 
 					<p>Are you graduating after this year?</p>
-					<div id="gsel:y" class="button2 btn">Yes</div>
-					<div id= "gsel:n" class="button2 btn">No</div>
+					<div id="gsel-y" class="button2 btn">Yes</div>
+					<div id= "gsel-n" class="button2 btn">No</div>
 
 					<p>cuid number (on the back of your cuid, not your uni)</p>
 					<input type="text" name="cuid" class="text" />
@@ -153,7 +153,7 @@
 						<li>(347)834-9066</li>
 						<li><a style="color:white;" href="www.brooklynboulders.com">Website</a></li>
 					</ul>
-					<div class="signup"><div id="msel:bk1" class="button2 btn">Select</div></div>
+					<div class="signup"><div id="msel-bk1" class="button2 btn">Select</div></div>
 				</div>
 				<div class="four columns" id="bk2">
 					<p class="p-name">Brooklyn Boulders</p>
@@ -164,7 +164,7 @@
 						<li>(347)834-9066</li>
 						<li><a style="color:white;" href="www.brooklynboulders.com">Website</a></li>
 					</ul>
-					<div class="signup"><div id="msel:bk2" class="button2 btn">Select</div></div>
+					<div class="signup"><div id="msel-bk2" class="button2 btn">Select</div></div>
 				</div>
 				<div class="four columns" id="mphc">
 					<p class="p-name">MPHC</p>
@@ -175,7 +175,7 @@
 						<li>5000 sqft vs 22000 at BKB</li>
 						<li><a style="color:white;" href='http://www.mphc.com/climbinggym/'>Website</a></li>
 					</ul>
-					<div class="signup"><div id="msel:mphc" class="button2 btn">Select</div></div>
+					<div class="signup"><div id="msel-mphc" class="button2 btn">Select</div></div>
 				</div>
 				<div class="four columns">
 					<p class="p-name">Default</p>
@@ -186,16 +186,16 @@
 						<li>Separate Fee for Climbing Team</li>
 						<li>Must provide own gear</li>
 					</ul>
-					<div class="signup"><div id="msel:default" class="button2 btn">Select</div></div>
+					<div class="signup"><div id="msel-default" class="button2 btn">Selected</div></div>
 				</div>
 		</div> <!-- end eight columns -->
 		<div id="mselect" style="visibility:hidden">
-					<input type="radio" name = "gensel" value="m">
+					<input type="radio" name = "gensel" value="m" checked>
 					<input type="radio" name = "gensel" value="f">
 					<input type="radio" name = "gsel" value="y">
-					<input type="radio" name = "gsel" value="n">
+					<input type="radio" name = "gsel" value="n" checked>
 					<input type="radio" name = "ssel" value="s">
-					<input type="radio" name = "ssel" value="m">
+					<input type="radio" name = "ssel" value="m" checked>
 					<input type="radio" name = "ssel" value="l">
 					<input type="radio" name = "ssel" value="xl">
 					<input type="radio" name = "msel" value="bk1">
@@ -240,19 +240,58 @@
 		    $('nav a').smoothScroll();
         });
     </script>
-	
+	<!-- select defaults -->
+	<script>
+		var defaultsarray = [$('#msel-default')[0], $('#ssel-m')[0], $('#gensel-m')[0], $('#gsel-n')[0]]
+		$(defaultsarray).addClass('button1');
+		$(defaultsarray).removeClass('button2');
+	</script>
 	<!-- buttons to options -->
 	<script>
 		$('.btn').click(function(){
-			var opt = this.id.split(":");
+			var opt = this.id.split("-");
 			if ($(this).hasClass('button2')){
-				$('[id^=' + opt[0] + ']').removeClass('button1');
-				$('[id^=' + opt[0] + ']').addClass('button2');
+				$('[id^=' + opt[0] + ']').each(function(){
+					$(this).removeClass('button1');
+					$(this).addClass('button2');
+					if ($(this).text() == 'Selected')
+						$(this).text('Select');
+				});
 				$('input[name=' + opt[0] + '][value=' + opt[1] + ']').attr('checked', true);
 				$(this).removeClass('button2');
 				$(this).addClass('button1');
-				if ($(this.text()) == 'Select')
+				if ($(this).text() == 'Select')
 					$(this).text('Selected');
+			}
+		});
+	</script>
+	<!-- basic form validation -->
+	<script>
+		$('#registration').submit(function(){
+			var validated = true;
+			$('.text').each(function(){
+				if ($(this).val() == '' && this.name != 'mname'){
+					alert('You must specify ' + $(this).prev().text());
+					validated = false;
+					return false;
+				}
+			});
+			if (validated){
+				var params = "";
+				$.each($('#registration').serializeArray(), function(i, field) {
+   					params += '&' + field.name + '=' + field.value;
+				});
+				$.getJSON(encodeURI('/registration.json?' + params.substring(1)), function(data){
+					if (data.already_inserted == 'true'){
+						$('#submit').attr('value','We already have an entry for you in our system.');
+						$('input').prop('disabled',true);
+					}
+					else if (data.already_inserted == 'false'){
+						$('#submit').attr('value','Thanks for registering!');
+						$('input').prop('disabled', true);
+					}
+				});
+
 			}
 		});
 	</script>
