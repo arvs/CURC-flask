@@ -1,20 +1,11 @@
 from flask import Flask, render_template, url_for, request, jsonify
 import requests
-from bs4 import BeautifulSoup
 from db_logic import DBConnection
 app = Flask(__name__)
 app.debug = True
 
 @app.route('/')
 def index():
-	r = requests.get('http://culpa.info/gold_nuggets')
-	page = BeautifulSoup(r.content)
-	names = filter(lambda x: u'(TA)' not in x, [list(x.parent.children)[0].contents[0].split(u'\xa0') for x in page.find_all("img", "nugget")])
-	profs = []
-	for name in names:
-		name = "%s %s" % (name[1].strip(','), name[0].strip(','))
-		profs.append(name)
-
 	return render_template('index.html', profs=profs, js_url=url_for("static",filename="search_cu.js"))
 
 @app.route('/search_for_prof')
