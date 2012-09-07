@@ -1,3 +1,4 @@
+import datetime
 from flask import Flask, render_template, url_for, request, jsonify
 from werkzeug.contrib.fixers import ProxyFix
 import requests
@@ -24,7 +25,7 @@ def register():
 	params['shirt'] = params.pop('ssel')
 	params['gym'] = params.pop('msel')
 	if len(db.get('members', fname=params['fname'], lname=params['lname'])) == 0:
-		db.insert('members', **params)
+		db.insert('members',timestamp=datetime.datetime.utcnow(),**params)
 		return jsonify(already_inserted='false')
 	else:
 		return jsonify(already_inserted='true')
