@@ -1,2 +1,4 @@
 app.pyc
+logs/*
+logs
 db_logic.pyc
