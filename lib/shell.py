@@ -11,7 +11,6 @@ def import_x(module, submodules):
 		submodules = (',').join(submodules)
 	ipapi.get().ex('from %s import %s' % (module, submodules))
 
-import_x("bs4", "BeautifulSoup")
 import_all("requests")
 # ipapi.get().ex('%load_ext autoreload')
 # ipapi.get().ex("%autoreload 2")
